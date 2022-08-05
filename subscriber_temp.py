@@ -120,9 +120,7 @@ class Dynamic_Display (Frame):
             for i, line in enumerate (self.lines):
                 if (i >= len (data_list) - 1):
                     break
-                else:
-                    # this is the y coordinates of point i and i+1
-                    # *80 is a scale to match the measurement guiding lines
+                else:                    
                     y1 = GRAPH_HEIGHT - (data_list[i] - 16) * 50
                     y2 = GRAPH_HEIGHT - (data_list[i + 1] - 16) * 50
                     self.canvas.coords (line, 25 + (i + 1) * LINE_SIZE, y2, 25 + i * LINE_SIZE, y1)
