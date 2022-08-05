@@ -24,7 +24,7 @@ class SubscriberSansGui:
             sys.exit(-1)
         time.sleep(5)
 
-        # self.__block()
+        self.block()
 
     def on_message(client, userdata, message):  # handler for on_message
         rec_data = message.payload.decode("utf-8")
@@ -40,7 +40,7 @@ class SubscriberSansGui:
             self.client.loop_forever()
         except:
             print("Disconnecting from broker")
-        self.client.disconnect()
+        # self.client.disconnect()
 
 
 def main():
