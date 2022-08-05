@@ -44,7 +44,6 @@ class Publisher:
             payload=hum_json_str)
         print(f'Publishing to topic: {self.topic}\nWith payload: {hum_json_str}')
         time.sleep(2)
-        # self.client.disconnect()
 
 
 def main():
