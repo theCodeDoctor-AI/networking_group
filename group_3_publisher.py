@@ -17,7 +17,7 @@ import math
 # Create temperature data
 def create_data():
 
-    DAILY_AMPLITUDE = 9
+    DAILY_AMPLITUDE = 7
 
     HOURLY_AMPLITUDE = DAILY_AMPLITUDE / 12
 

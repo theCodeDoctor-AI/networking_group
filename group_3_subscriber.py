@@ -50,7 +50,7 @@ def start_client ():
 
 # GUI Display
 GRAPH_WIDTH = 1200
-GRAPH_HEIGHT = 950
+GRAPH_HEIGHT = 850
 LINE_WIDTH = 1
 LINE_SIZE = (GRAPH_WIDTH - 50) / POINT_COUNT
 
@@ -75,7 +75,7 @@ class Dynamic_Display (Frame):
         self.canvas.create_line (25 - LINE_WIDTH / 2, 20, 25 - LINE_WIDTH / 2, GRAPH_HEIGHT)
         self.canvas.create_line (25 - LINE_WIDTH / 2, GRAPH_HEIGHT, GRAPH_WIDTH + 25, GRAPH_HEIGHT)
         # measurement labels
-        Label (text='16`C', bg='#FFF8B3', font=('Arial', 10)).place (x=GRAPH_WIDTH - 30, y=GRAPH_HEIGHT - 22)
+        # Label (text='16`C', bg='#FFF8B3', font=('Arial', 10)).place (x=GRAPH_WIDTH - 30, y=GRAPH_HEIGHT - 22)
         Label (text='17`C', bg='#FFF8B3', font=('Arial', 10)).place (x=GRAPH_WIDTH - 30, y=GRAPH_HEIGHT - 100)
         Label (text='18`C', bg='#FFF8B3', font=('Arial', 10)).place (x=GRAPH_WIDTH - 30, y=GRAPH_HEIGHT - 180)
         Label (text='19`C', bg='#FFF8B3', font=('Arial', 10)).place (x=GRAPH_WIDTH - 30, y=GRAPH_HEIGHT - 260)
@@ -98,7 +98,7 @@ class Dynamic_Display (Frame):
         self.canvas.create_line (280, GRAPH_HEIGHT - 640, GRAPH_WIDTH - 35, GRAPH_HEIGHT - 640, fill='#cfcfcf')
         self.canvas.create_line (280, GRAPH_HEIGHT - 720, GRAPH_WIDTH - 35, GRAPH_HEIGHT - 720, fill='#cfcfcf')
         self.canvas.create_line (280, GRAPH_HEIGHT - 800, GRAPH_WIDTH - 35, GRAPH_HEIGHT - 800, fill='#cfcfcf')
-        self.canvas.create_line (280, GRAPH_HEIGHT - 880, GRAPH_WIDTH - 35, GRAPH_HEIGHT - 880, fill='#cfcfcf')
+        # self.canvas.create_line (280, GRAPH_HEIGHT - 880, GRAPH_WIDTH - 35, GRAPH_HEIGHT - 880, fill='#cfcfcf')
 
         # initialize the data lines
         for i in range (POINT_COUNT):
