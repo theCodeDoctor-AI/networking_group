@@ -17,7 +17,7 @@ topic = "relative-Humidity"
 client = mqtt.Client()
 
 DATA_COUNT = 40
-data_queue = []  # to store the received data
+data = []  # to store the received data
 
 
 # decode and print the message when received
@@ -25,11 +25,11 @@ def on_message(client, userdata, message):
     data = message.payload.decode("utf-8")
     rec_obj = json.loads(data)
     updated_time = rec_obj["timestamp"]
-    data_queue.append(rec_obj["humidity"])  # append new data to the queue
-    print(f'Message received:  {updated_time}\nHumidity Data:{data_queue[-1]}')
-    print("data_queue: ", data_queue)
-    if len(data_queue) >= DATA_COUNT:  # if data is full, pop the first one
-        data_queue.pop(0)
+    data.append(rec_obj["humidity"])  # append new data to the queue
+    print(f'Message received:  {updated_time}\nHumidity Data:{data[-1]}')
+    print("data: ", data)
+    if len(data) >= DATA_COUNT:  # if data is full, pop the first one
+        data.pop(0)
 
 
 def run_forever() -> None:
