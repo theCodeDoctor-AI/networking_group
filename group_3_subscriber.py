@@ -16,6 +16,7 @@ from tkinter import Tk, Canvas, Frame, BOTH, W, Button, Label
 broker = "mqtt.eclipseprojects.io"
 # create client
 client = mqtt.Client ()
+topic = "COMP216Sec001Group5" #'TorontoTemp'
 
 POINT_COUNT = 72
 data_queue = []  # to store the received data
@@ -41,7 +42,7 @@ def start_client ():
     client.on_message = on_message
     # connect to broker
     client.connect (broker, 1883)
-    client.subscribe ('TorontoTemp')
+    client.subscribe (topic)
     print ('Subscribing')
     time.sleep (2)
     # client.loop_forever()
@@ -76,17 +77,17 @@ class Dynamic_Display (Frame):
         self.canvas.create_line (25 - LINE_WIDTH / 2, GRAPH_HEIGHT, GRAPH_WIDTH + 25, GRAPH_HEIGHT)
         # measurement labels
         # Label (text='16`C', bg='#FFF8B3', font=('Arial', 10)).place (x=GRAPH_WIDTH - 30, y=GRAPH_HEIGHT - 22)
-        Label (text='17`C', bg='#FFF8B3', font=('Arial', 10)).place (x=GRAPH_WIDTH - 30, y=GRAPH_HEIGHT - 100)
-        Label (text='18`C', bg='#FFF8B3', font=('Arial', 10)).place (x=GRAPH_WIDTH - 30, y=GRAPH_HEIGHT - 180)
-        Label (text='19`C', bg='#FFF8B3', font=('Arial', 10)).place (x=GRAPH_WIDTH - 30, y=GRAPH_HEIGHT - 260)
-        Label (text='20`C', bg='#FFF8B3', font=('Arial', 10)).place (x=GRAPH_WIDTH - 30, y=GRAPH_HEIGHT - 340)
-        Label (text='21`C', bg='#FFF8B3', font=('Arial', 10)).place (x=GRAPH_WIDTH - 30, y=GRAPH_HEIGHT - 420)
-        Label (text='22`C', bg='#FFF8B3', font=('Arial', 10)).place (x=GRAPH_WIDTH - 30, y=GRAPH_HEIGHT - 500)
-        Label (text='23`C', bg='#FFF8B3', font=('Arial', 10)).place (x=GRAPH_WIDTH - 30, y=GRAPH_HEIGHT - 580)
-        Label (text='24`C', bg='#FFF8B3', font=('Arial', 10)).place (x=GRAPH_WIDTH - 30, y=GRAPH_HEIGHT - 660)
-        Label (text='25`C', bg='#FFF8B3', font=('Arial', 10)).place (x=GRAPH_WIDTH - 30, y=GRAPH_HEIGHT - 740)
-        Label (text='26`C', bg='#FFF8B3', font=('Arial', 10)).place (x=GRAPH_WIDTH - 30, y=GRAPH_HEIGHT - 820)
-        Label (text='27`C', bg='#FFF8B3', font=('Arial', 10)).place (x=GRAPH_WIDTH - 30, y=GRAPH_HEIGHT - 900)
+        Label (text='17\xb0C', bg='#FFF8B3', font=('Arial', 10)).place (x=GRAPH_WIDTH - 30, y=GRAPH_HEIGHT - 100)
+        Label (text='18\xb0C', bg='#FFF8B3', font=('Arial', 10)).place (x=GRAPH_WIDTH - 30, y=GRAPH_HEIGHT - 180)
+        Label (text='19\xb0C', bg='#FFF8B3', font=('Arial', 10)).place (x=GRAPH_WIDTH - 30, y=GRAPH_HEIGHT - 260)
+        Label (text='20\xb0C', bg='#FFF8B3', font=('Arial', 10)).place (x=GRAPH_WIDTH - 30, y=GRAPH_HEIGHT - 340)
+        Label (text='21\xb0C', bg='#FFF8B3', font=('Arial', 10)).place (x=GRAPH_WIDTH - 30, y=GRAPH_HEIGHT - 420)
+        Label (text='22\xb0C', bg='#FFF8B3', font=('Arial', 10)).place (x=GRAPH_WIDTH - 30, y=GRAPH_HEIGHT - 500)
+        Label (text='23\xb0C', bg='#FFF8B3', font=('Arial', 10)).place (x=GRAPH_WIDTH - 30, y=GRAPH_HEIGHT - 580)
+        Label (text='24\xb0C', bg='#FFF8B3', font=('Arial', 10)).place (x=GRAPH_WIDTH - 30, y=GRAPH_HEIGHT - 660)
+        Label (text='25\xb0C', bg='#FFF8B3', font=('Arial', 10)).place (x=GRAPH_WIDTH - 30, y=GRAPH_HEIGHT - 740)
+        Label (text='26\xb0C', bg='#FFF8B3', font=('Arial', 10)).place (x=GRAPH_WIDTH - 30, y=GRAPH_HEIGHT - 820)
+        Label (text='27\xb0C', bg='#FFF8B3', font=('Arial', 10)).place (x=GRAPH_WIDTH - 30, y=GRAPH_HEIGHT - 900)
         # guiding lines
         self.canvas.create_line (25, GRAPH_HEIGHT - 80, GRAPH_WIDTH - 35, GRAPH_HEIGHT - 80, fill='#cfcfcf')
         self.canvas.create_line (25, GRAPH_HEIGHT - 160, GRAPH_WIDTH - 35, GRAPH_HEIGHT - 160, fill='#cfcfcf')

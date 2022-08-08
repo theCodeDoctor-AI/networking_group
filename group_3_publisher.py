@@ -53,11 +53,9 @@ def create_data():
     return time_series
 
 broker = "mqtt.eclipseprojects.io"
-
+topic = "COMP216Sec001Group5"   #'TorontoTemp'
 client = mqtt.Client()
-
 print("Connected to the Broker", broker)
-
 client.connect(broker, 1883)
 
 client.loop_start()
@@ -66,8 +64,8 @@ while True:
     time_series = create_data()
     for series in time_series:
         dict_str = json.dumps(series)
-        client.publish("TorontoTemp", payload=dict_str)
-        print('Publishing data: ' + str(dict_str) + ' to Networking COMP216 group ? TorontoTemp')
+        client.publish(topic, payload=dict_str)
+        print('Publishing data: ' + str(dict_str) + ' to Networking COMP216 group ? COMP216Sec001Group5')
         time.sleep(1)
 
 client.loop_stop()
