@@ -165,7 +165,7 @@ class DynamicDisplay(Tk):
             self.canvas.create_line(25 - self.LINE_WIDTH / 2, 20, 25 - self.LINE_WIDTH / 2, self.GRAPH_HEIGHT)
             self.canvas.create_line(25 - self.LINE_WIDTH / 2, self.GRAPH_HEIGHT, self.GRAPH_WIDTH + 25, self.GRAPH_HEIGHT)
 
-            # measurement labels
+            # measurement labels and guiding lines
             temperature_degrees = 17
             graph_start = 25
             graph_width_decrease = 30
@@ -174,7 +174,7 @@ class DynamicDisplay(Tk):
             for i in range(11):
                 temperature_degrees = temperature_degrees + i
                 graph_height_decrease += 50
-                
+
                 # measurement labels
                 Label(text=f'{temperature_degrees}\xb0C', bg='#FFF8B3', font=('Arial', 10)).place (x=self.GRAPH_WIDTH - graph_width_decrease, y=self.GRAPH_HEIGHT - graph_height_decrease)
 
