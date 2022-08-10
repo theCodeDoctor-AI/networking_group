@@ -1,29 +1,40 @@
 # -*- coding: utf-8 -*-
 """
-Created on Sat Apr 16 01:29:32 2022
-@author: COMP216 Assignment 3 - Group 5
-group_5_subscriber.py
+        
+    College: Centennial College
+    Program: Software Engineering Technology - Artificial Intelligence
+    Term: Summer 2022
+    Course: COMP 216 - Networking for Software Developers
 
-Subscriber
-    The subscriber accept data from the broker and process it. It will decode the data and decide how to process it.
-    This is to be implemented as a GUI application. -- tkinter
+    Created on Fri 5 Aug 2022
+    @author: COMP216 Assignment 3 - Group 5
+    group_5_util.py
 
-Subscriber – Receiving data from the broker
-    You will listen to messages from the broker under an agreed topic.
-    You will decode the message and decide how to handle the data.
+    Members:
+    Ankit Mehra    - 301154845
+    Bruno Morgado  - 301154898
+    Mark Randall   - 301178066
+    Ronald Saenz   - 301218602
 
-Subscriber – Handling the data and absence of or wrong data
-    This is where you decide how to keep track of the data, and if you are going for bonus marks, 
-    this is also where you have to decide what is out of range data. 
-    You also have to be able to detect missing transmissions and handle those gracefully.
-    Make sure to only keep track of a certain amount of data, not all data that is received by the subscriber. 
-    If you keep track of all the data, your application may eventually run out of memory to keep the data in and crash.
+    Subscriber
+        The subscriber accept data from the broker and process it. It will decode the data and decide how to process it.
+        This is to be implemented as a GUI application. -- tkinter
 
-Subscriber – User interface
-    Make an application using the tkinter GUI framework.
-    Use a graph to display the data the application has received and will receive in the future.
+    Subscriber – Receiving data from the broker
+        You will listen to messages from the broker under an agreed topic.
+        You will decode the message and decide how to handle the data.
+
+    Subscriber – Handling the data and absence of or wrong data
+        This is where you decide how to keep track of the data, and if you are going for bonus marks, 
+        this is also where you have to decide what is out of range data. 
+        You also have to be able to detect missing transmissions and handle those gracefully.
+        Make sure to only keep track of a certain amount of data, not all data that is received by the subscriber. 
+        If you keep track of all the data, your application may eventually run out of memory to keep the data in and crash.
+
+    Subscriber – User interface
+        Make an application using the tkinter GUI framework.
+        Use a graph to display the data the application has received and will receive in the future.
 """
-
 import paho.mqtt.client as mqtt
 import json
 import time
@@ -43,7 +54,7 @@ class Subscriber:
             self.delay = delay
 
             self.POINT_COUNT = 72
-            self.data_queue = []  # to store the received data
+            self.data_list = []  # to store the received data
 
             self.GRAPH_WIDTH = graph_width
             self.GRAPH_HEIGHT = graph_height
@@ -59,14 +70,14 @@ class Subscriber:
         try:
             data = message.payload.decode("utf-8")
             obj = json.loads(data)
-            updated_time = obj["Time of Creation"]
-            self.data_queue.append(obj["Temperature"])  # append new data to the queue
+            updated_time = obj["timestamp"]
+            self.data_list.append(obj["temperature"])  # append new data to the queue
 
-            print('message received: ', updated_time, self.data_queue[-1])
-            print("data_queue: ", self.data_queue)
+            print('message received: ', updated_time, self.data_list[-1])
+            print("data_list: ", self.data_list)
 
-            if len (self.data_queue) >= self.POINT_COUNT:  # if data is full, pop the first one
-                self.data_queue.pop(0)
+            if len (self.data_list) >= self.POINT_COUNT:  # if data is full, pop the first one
+                self.data_list.pop(0)
         except Exception as e:
             print(f"Exception to decode the message: {e}")
 
@@ -121,8 +132,6 @@ class DynamicDisplay(Tk):
             self.GRAPH_HEIGHT = graph_height
             self.LINE_WIDTH = line_width
             self.LINE_SIZE = (self.GRAPH_WIDTH - 50) / self.sub.POINT_COUNT
-
-            # self.is_stopped = True
             
             self.title('Assignment 3 - Group 5')
             self.createPanel()
@@ -157,31 +166,23 @@ class DynamicDisplay(Tk):
             self.canvas.create_line(25 - self.LINE_WIDTH / 2, self.GRAPH_HEIGHT, self.GRAPH_WIDTH + 25, self.GRAPH_HEIGHT)
 
             # measurement labels
-            # Label (text='16`C', bg='#FFF8B3', font=('Arial', 10)).place (x=self.GRAPH_WIDTH - 30, y=self.GRAPH_HEIGHT - 22)
-            Label(text='17\xb0C', bg='#FFF8B3', font=('Arial', 10)).place (x=self.GRAPH_WIDTH - 30, y=self.GRAPH_HEIGHT - 100)
-            Label(text='18\xb0C', bg='#FFF8B3', font=('Arial', 10)).place (x=self.GRAPH_WIDTH - 30, y=self.GRAPH_HEIGHT - 180)
-            Label(text='19\xb0C', bg='#FFF8B3', font=('Arial', 10)).place (x=self.GRAPH_WIDTH - 30, y=self.GRAPH_HEIGHT - 260)
-            Label(text='20\xb0C', bg='#FFF8B3', font=('Arial', 10)).place (x=self.GRAPH_WIDTH - 30, y=self.GRAPH_HEIGHT - 340)
-            Label(text='21\xb0C', bg='#FFF8B3', font=('Arial', 10)).place (x=self.GRAPH_WIDTH - 30, y=self.GRAPH_HEIGHT - 420)
-            Label(text='22\xb0C', bg='#FFF8B3', font=('Arial', 10)).place (x=self.GRAPH_WIDTH - 30, y=self.GRAPH_HEIGHT - 500)
-            Label(text='23\xb0C', bg='#FFF8B3', font=('Arial', 10)).place (x=self.GRAPH_WIDTH - 30, y=self.GRAPH_HEIGHT - 580)
-            Label(text='24\xb0C', bg='#FFF8B3', font=('Arial', 10)).place (x=self.GRAPH_WIDTH - 30, y=self.GRAPH_HEIGHT - 660)
-            Label(text='25\xb0C', bg='#FFF8B3', font=('Arial', 10)).place (x=self.GRAPH_WIDTH - 30, y=self.GRAPH_HEIGHT - 740)
-            Label(text='26\xb0C', bg='#FFF8B3', font=('Arial', 10)).place (x=self.GRAPH_WIDTH - 30, y=self.GRAPH_HEIGHT - 820)
-            Label(text='27\xb0C', bg='#FFF8B3', font=('Arial', 10)).place (x=self.GRAPH_WIDTH - 30, y=self.GRAPH_HEIGHT - 900)
+            temperature_degrees = 17
+            graph_width_decrease = 30
+            graph_height_decrease = 30
+            for i in range(11):
+                temperature_degrees = temperature_degrees + i
+                graph_height_decrease += 50
+
+                Label(text=f'{temperature_degrees}\xb0C', bg='#FFF8B3', font=('Arial', 10)).place (x=self.GRAPH_WIDTH - graph_width_decrease, y=self.GRAPH_HEIGHT - graph_height_decrease)
 
             # guiding lines
-            self.canvas.create_line(25, self.GRAPH_HEIGHT - 80, self.GRAPH_WIDTH - 35, self.GRAPH_HEIGHT - 80, fill='#cfcfcf')
-            self.canvas.create_line(25, self.GRAPH_HEIGHT - 160, self.GRAPH_WIDTH - 35, self.GRAPH_HEIGHT - 160, fill='#cfcfcf')
-            self.canvas.create_line(25, self.GRAPH_HEIGHT - 240, self.GRAPH_WIDTH - 35, self.GRAPH_HEIGHT - 240, fill='#cfcfcf')
-            self.canvas.create_line(25, self.GRAPH_HEIGHT - 320, self.GRAPH_WIDTH - 35, self.GRAPH_HEIGHT - 320, fill='#cfcfcf')
-            self.canvas.create_line(25, self.GRAPH_HEIGHT - 400, self.GRAPH_WIDTH - 35, self.GRAPH_HEIGHT - 400, fill='#cfcfcf')
-            self.canvas.create_line(25, self.GRAPH_HEIGHT - 480, self.GRAPH_WIDTH - 35, self.GRAPH_HEIGHT - 480, fill='#cfcfcf')
-            self.canvas.create_line(25, self.GRAPH_HEIGHT - 560, self.GRAPH_WIDTH - 35, self.GRAPH_HEIGHT - 560, fill='#cfcfcf')
-            self.canvas.create_line(25, self.GRAPH_HEIGHT - 640, self.GRAPH_WIDTH - 35, self.GRAPH_HEIGHT - 640, fill='#cfcfcf')
-            self.canvas.create_line(25, self.GRAPH_HEIGHT - 720, self.GRAPH_WIDTH - 35, self.GRAPH_HEIGHT - 720, fill='#cfcfcf')
-            self.canvas.create_line(25, self.GRAPH_HEIGHT - 800, self.GRAPH_WIDTH - 35, self.GRAPH_HEIGHT - 800, fill='#cfcfcf')
-            # self.canvas.create_line(280, self.GRAPH_HEIGHT - 880, self.GRAPH_WIDTH - 35, self.GRAPH_HEIGHT - 880, fill='#cfcfcf')
+            graph_start = 25
+            graph_width_decrease = 35
+            graph_height_decrease = 30
+            for i in range(11):
+                graph_height_decrease += 50
+
+                self.canvas.create_line(graph_start, self.GRAPH_HEIGHT - graph_height_decrease, self.GRAPH_WIDTH - graph_width_decrease, self.GRAPH_HEIGHT - graph_height_decrease, fill='#cfcfcf')
 
             # initialize the data lines
             for i in range(self.sub.POINT_COUNT):
@@ -203,20 +204,20 @@ class DynamicDisplay(Tk):
         except Exception as e:
             print(f"Exception to init Graph UI: {e}")
 
-    # redraw the lines with values in data_queue
+    # redraw the lines with values in data_list
     def value_change(self):
         try:
             while True:
                 for i, line in enumerate(self.lines):
-                    if (i >= len(self.sub.data_queue) - 1):
+                    if (i >= len(self.sub.data_list) - 1):
                         break
                     else:
                         # this is the y coordinates of point i and i+1
                         # *80 is a scale to match the measurement guiding lines
-                        y1 = self.GRAPH_HEIGHT - (self.sub.data_queue[i] - 16) * 80
-                        y2 = self.GRAPH_HEIGHT - (self.sub.data_queue[i + 1] - 16) * 80
+                        y1 = self.GRAPH_HEIGHT - (self.sub.data_list[i] - 16) * 50
+                        y2 = self.GRAPH_HEIGHT - (self.sub.data_list[i + 1] - 16) * 50
                         self.canvas.coords(line, 25 + (i + 1) * self.LINE_SIZE, y2, 25 + i * self.LINE_SIZE, y1)
-                # print(data_queue[self.sub.POINT_COUNT-1])
+                # print(data_list[self.sub.POINT_COUNT-1])
                 self.update()
                 time.sleep(1)
         except Exception as e:
@@ -226,9 +227,6 @@ class DynamicDisplay(Tk):
         try:
             # Start the subscriber
             self.sub.start_client()
-
-            # create the event
-            self.event = threading.Event()
 
             # Start the threading
             self.start = threading.Thread(target=self.value_change())
@@ -252,12 +250,14 @@ class DynamicDisplay(Tk):
         except Exception as e:
             print(f"Exception to close the GUI: {e}")
 
-
-if __name__ == "__main__":
+def main():
     try:
         # Connection with Subscriber
-        sub = Subscriber()
+        sub = Subscriber(graph_width=1000, graph_height=550, line_width=1)
         #sub.start_client()
         sub.plot()
     except Exception as e:
         print(f"Exception with the Subscriber: {e}")
+
+if __name__ == "__main__":
+    main()
